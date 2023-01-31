@@ -32,16 +32,18 @@ app.delete("/api/movies/:id", movieHandlers.deleteMovie)
 
 const userHandlers = require("./userHandlers");
 
+// Password
+const { hashPassword } = require("./auth.js");
 
 // get users
 app.get("/api/users", userHandlers.getUsers);
 app.get("/api/users/:id", userHandlers.getUsersById);
 
 // post users
-app.post("/api/users", validateUser, userHandlers.postUser);
+app.post("/api/users", validateUser, hashPassword, userHandlers.postUser);
 
 // put users
-app.put("/api/users/:id", validateUser, userHandlers.putUser)
+app.put("/api/users/:id", validateUser, hashPassword, userHandlers.putUser)
 
 // delete users
 app.delete("/api/users/:id", userHandlers.deleteUser)
@@ -53,3 +55,4 @@ app.listen(port, (err) => {
     console.log(`Server is listening on ${port}`);
   }
 });
+
