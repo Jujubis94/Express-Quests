@@ -1,7 +1,7 @@
 const database = require("./database");
 
 const getUsers = (req, res) => {
-  let sql = "select * from users";
+  let sql = "select id, firstname, lastname, email, city, language from users";
   const array = [];
 
   if (req.query.language != null) {
@@ -31,7 +31,7 @@ const getUsers = (req, res) => {
     const id = parseInt(req.params.id);
   
     database
-      .query("select * from users where id = ?", [id])
+      .query("select id, firstname, lastname, email, city, language from users where id = ?", [id])
       .then(([users]) => {
         if (users[0] == null) {
           res.status(404).send("Not Found");
