@@ -15,6 +15,8 @@ const welcome = (req, res) => {
 
 app.get("/", welcome);
 
+// Password
+const {verifyToken } = require("./auth.js");
 const movieHandlers = require("./movieHandlers");
 
 // get movies
@@ -22,7 +24,7 @@ app.get("/api/movies", movieHandlers.getMovies);
 app.get("/api/movies/:id", movieHandlers.getMovieById);
 
 // post movies
-app.post("/api/movies",validateMovie, movieHandlers.postMovie);
+app.post("/api/movies",validateMovie, verifyToken, movieHandlers.postMovie);
 
 // put movies
 app.put("/api/movies/:id",validateMovie, movieHandlers.putMovie)
@@ -33,8 +35,10 @@ app.delete("/api/movies/:id", movieHandlers.deleteMovie)
 const userHandlers = require("./userHandlers");
 
 // Password
-const { hashPassword } = require("./auth.js");
+const { hashPassword, verifyPassword } = require("./auth.js");
 
+// user login
+app.post("/api/login", userHandlers.getUserByEmailWithPasswordAndPassToNext, verifyPassword)
 // get users
 app.get("/api/users", userHandlers.getUsers);
 app.get("/api/users/:id", userHandlers.getUsersById);
