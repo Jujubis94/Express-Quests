@@ -22,7 +22,7 @@ const welcome = (req, res) => {
   res.send("Welcome to my favourite movie list");
 };
 
-// public
+/* public routes */
 app.get("/", welcome);
 // get movies
 app.get("/api/movies", movieHandlers.getMovies);
@@ -35,6 +35,7 @@ app.post("/api/login", userHandlers.getUserByEmailWithPasswordAndPassToNext, ver
 // post users
 app.post("/api/users", validateUser, hashPassword, userHandlers.postUser);
 
+/* protected routes */
 app.use(verifyToken)
 
 // post movies
